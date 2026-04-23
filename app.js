@@ -1,0 +1,24 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const cors = require ("cors");
+const connectpool = require("./configs/database");
+const profileRoute = require("./routes/profileRoute");
+
+app.use(cors());
+app.use (express.json());
+
+//Api
+app.use("/api", profileRoute);
+
+
+
+app.get("/test", (req,res) => {
+    res.status(200).json({Message:"Success"})
+})
+
+
+const PORT = process.env.PORT;
+app.listen (PORT, ()=> {
+    console.log (`Server is Live on ${PORT}`)
+})
