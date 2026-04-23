@@ -13,9 +13,9 @@ app.use("/api", profileRoute);
 
 
 
-app.get("/test", (req,res) => {
-    res.status(200).json({Message:"Success"})
-})
+app.get("/", (req,res) => {
+    res.status(200).json({status:"Succes", Message:"App is Running Live"})
+});
 
 
 const PORT = process.env.PORT;
