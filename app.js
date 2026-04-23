@@ -14,7 +14,7 @@ app.use("/api", profileRoute);
 
 
 app.get("/", (req,res) => {
-    res.status(200).json({status:"Succes", Message:"App is Running Live"})
+    res.status(200).json({status:"Success", Message:"App is Running Live"})
 });
 
 
