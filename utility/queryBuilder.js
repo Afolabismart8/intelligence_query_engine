@@ -5,6 +5,9 @@ const buildQuery = (query = {}) => {
   if (query.gender && query.gender.trim()) {
     values.push(query.gender);
     conditions.push(`gender = $${values.length}`);
+    // Add probability threshold for gender when filtering
+    values.push(0.5);
+    conditions.push(`gender_probability > $${values.length}`);
   }
 
   if (query.min_age) {
@@ -17,9 +20,17 @@ const buildQuery = (query = {}) => {
     conditions.push(`age <= $${values.length}`);
   }
 
+  if (query.age_group && query.age_group.trim()) {
+    values.push(query.age_group);
+    conditions.push(`age_group = $${values.length}`);
+  }
+
   if (query.country_id && query.country_id.trim()) {
     values.push(query.country_id);
     conditions.push(`country_id = $${values.length}`);
+    // Add probability threshold for country when filtering
+    values.push(0.5);
+    conditions.push(`country_probability > $${values.length}`);
   }
 
   const whereClause = conditions.length

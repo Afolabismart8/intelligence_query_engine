@@ -5,12 +5,21 @@ exports.getProfiles = async (req, res) => {
   try {
     const result = await getProfilesService(req.query);
 
+    const totalPages = Math.ceil(result.total / result.limit);
+    const from = (result.page - 1) * result.limit + 1;
+    const to = Math.min(result.page * result.limit, result.total);
+
     return res.json({
       status: "success",
-      page: result.page,
-      limit: result.limit,
-      total: result.total,
       data: result.data,
+      pagination: {
+        current_page: result.page,
+        per_page: result.limit,
+        total: result.total,
+        total_pages: totalPages,
+        from: result.data.length > 0 ? from : null,
+        to: result.data.length > 0 ? to : null,
+      }
     });
   } catch (err) {
     return res.status(500).json({
@@ -37,12 +46,21 @@ exports.searchProfiles = async (req, res) => {
       limit: req.query.limit,
     });
 
+    const totalPages = Math.ceil(result.total / result.limit);
+    const from = (result.page - 1) * result.limit + 1;
+    const to = Math.min(result.page * result.limit, result.total);
+
     return res.json({
       status: "success",
-      page: result.page,
-      limit: result.limit,
-      total: result.total,
       data: result.data,
+      pagination: {
+        current_page: result.page,
+        per_page: result.limit,
+        total: result.total,
+        total_pages: totalPages,
+        from: result.data.length > 0 ? from : null,
+        to: result.data.length > 0 ? to : null,
+      }
     });
   } catch (err) {
     return res.status(422).json({
