@@ -13,6 +13,29 @@ const seedDatabase = async () => {
   try {
     console.log("Seeding started...");
 
+    // Create profiles table if it doesn't exist
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS profiles (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        gender TEXT,
+        gender_probability REAL,
+        age INTEGER,
+        age_group TEXT,
+        country_id TEXT,
+        country_name TEXT,
+        country_probability REAL,
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+      )
+    `);
+
+    // Create unique index on name for conflict resolution
+    await pool.query(`
+      CREATE UNIQUE INDEX IF NOT EXISTS profiles_name_key ON profiles (name)
+    `);
+
+    console.log("Table setup complete...");
+
     for (let user of profiles) {
       await pool.query(
         `
