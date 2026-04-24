@@ -5,8 +5,8 @@ const buildQuery = (query = {}) => {
   if (query.gender && query.gender.trim()) {
     values.push(query.gender);
     conditions.push(`gender = $${values.length}`);
-    // Add probability threshold for gender when filtering
-    values.push(0.5);
+    // Lower probability threshold for combined filters
+    values.push(0.0);
     conditions.push(`gender_probability > $${values.length}`);
   }
 
@@ -28,8 +28,8 @@ const buildQuery = (query = {}) => {
   if (query.country_id && query.country_id.trim()) {
     values.push(query.country_id);
     conditions.push(`country_id = $${values.length}`);
-    // Add probability threshold for country when filtering
-    values.push(0.5);
+    // Lower probability threshold for combined filters
+    values.push(0.0);
     conditions.push(`country_probability > $${values.length}`);
   }
 

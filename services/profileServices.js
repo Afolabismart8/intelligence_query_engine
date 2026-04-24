@@ -12,7 +12,7 @@ const getProfilesService = async (query) => {
 
     const order = query.order === "asc" ? "ASC" : "DESC";
 
-    const limit = Math.min(parseInt(query.limit) || 10, 50);
+    const limit = Math.min(parseInt(query.limit) || 10, 100);
     const page = parseInt(query.page) || 1;
     const offset = (page - 1) * limit;
 
